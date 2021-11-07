@@ -1,26 +1,25 @@
-using Microsoft.OpenApi.Models;
+using HotChocolate.Types;
+using BlogGraphQLFileUpload.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = "BlogGraphQLFileUpload", Version = "v1" });
-});
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddType<UploadType>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlogGraphQLFileUpload v1"));
-}
-
 app.UseAuthorization();
-
 app.MapControllers();
+
+app
+    .UseRouting()
+    .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
 
 app.Run();
