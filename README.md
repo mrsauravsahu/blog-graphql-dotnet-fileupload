@@ -1,6 +1,6 @@
 # blog-graphql-dotnet-fileupload
 
-upload file via GraphQL with multipart requests.
+upload file via GraphQL with multipart requests `(written on .NET 6.0.100-rc.1.21458.32)`
 
 the graphql queries and mutations are as follows - 
 
